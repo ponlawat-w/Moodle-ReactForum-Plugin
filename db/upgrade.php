@@ -387,5 +387,17 @@ function xmldb_reactforum_upgrade($oldversion) {
         upgrade_mod_savepoint(true, 2019012201, 'reactforum');
     }
 
+    if ($oldversion < 2019072135) {
+
+        $table = new xmldb_table('reactforum_posts');
+        $field = new xmldb_field('deleted', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, '0', 'mailnow');
+
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        upgrade_mod_savepoint(true, 2019072135, 'reactforum');
+    }
+
     return true;
 }
